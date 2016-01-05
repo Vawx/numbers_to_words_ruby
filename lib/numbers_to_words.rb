@@ -35,6 +35,8 @@ class Fixnum
       return get_by_tens( self )
     elsif( self > 100 && self < 1000 )
       return get_by_hundreds( self )
+    elsif( self > 1000 && self < 999999 )
+      return get_by_thousands( self )
     end
   end
 
@@ -59,4 +61,28 @@ class Fixnum
     end
   end
 
+  define_method(:get_by_thousands) do |thousands|
+    remaining = thousands % 1000
+    thousands -= remaining
+    thousands /= 1000
+    thousands_as_text = ""
+    remaining_as_text = ""
+
+    if thousands > 99
+      thousands_as_text = get_by_hundreds( thousands ) + " thousand "
+    elsif thousands > 19
+      thousands_as_text = get_by_tens( thousands ) + " thousand "
+    else
+      thousands_as_text = to_nineteen.fetch( thousands ) + " thousand "
+    end
+
+    if remaining > 99
+      remaining_as_text = get_by_hundreds( remaining )
+    elsif remaining > 19
+      remaining_as_text = get_by_tens( remaining )
+    else
+      remaining_as_text = to_nineteen.fetch( remaining )
+    end
+    return thousands_as_text + remaining_as_text
+  end
 end
