@@ -37,6 +37,8 @@ class Fixnum
       return get_by_hundreds( self )
     elsif( self > 1000 && self < 999999 )
       return get_by_thousands( self )
+    elsif( self > 1000000 && self < 999999999)
+      return get_by_millions(self)
     end
   end
 
@@ -85,4 +87,33 @@ class Fixnum
     end
     return thousands_as_text + remaining_as_text
   end
+
+  define_method(:get_by_millions) do |millions|
+    remaining = millions % 1000000
+    millions -= remaining
+    millions /= 1000000
+    millions_as_text = ""
+    thousands_as_text = ""
+
+    if millions > 99
+      millions_as_text = get_by_hundreds( millions )
+    elsif millions > 19
+      millions_as_text = get_by_tens( millions )
+    else
+      millions_as_text = to_nineteen.fetch( million )
+    end
+
+    if remaining > 999
+      thousands_as_text = get_by_thousands( remaining )
+    elsif remaining > 99
+      thousands_as_text = get_by_hundreds( remaining )
+    elsif remaining > 19
+      thousands_as_text = get_by_tens( remaining )
+    else
+      thousands_as_text = to_nineteen.fetch( remaining )
+    end
+
+    return millions_as_text + " million " + thousands_as_text
+  end
+
 end
