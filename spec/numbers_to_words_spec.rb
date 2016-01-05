@@ -25,6 +25,12 @@ describe("String#get_by_millions") do
   end
 end
 
+describe("String#get_by_billions") do
+  it('convert a numerical value between 1_000_000_000 and 999_999_999_999 to text') do
+    expect(341365654789.numbers_to_words).to(eq("three hundred and fourty one billion three hundred and sixty five million six hundred and fifty four thousand seven hundred and eighty nine"))
+  end
+end
+
 describe("String#numbers_to_words") do
   it ('converts a numerical value into text read as the value') do
     expect(1.numbers_to_words).to(eq('one'))
@@ -40,5 +46,8 @@ describe("String#numbers_to_words") do
   end
   it ('converts a numerical value above 1000 into text as the value') do
     expect(45322.numbers_to_words).to(eq('fourty five thousand three hundred and twenty two'))
+  end
+  it('convert a numerical value between 1_000_000_000 and 999_999_999_999 to text') do
+    expect(123456789123.numbers_to_words).to(eq("one hundred and twenty three billion four hundred and fifty six million seven hundred and eighty nine thousand one hundred and twenty three"))
   end
 end

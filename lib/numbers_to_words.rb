@@ -33,12 +33,14 @@ class Fixnum
       return to_nineteen.fetch( self )
     elsif( self > 19 && self < 100 )
       return get_by_tens( self )
-    elsif( self > 100 && self < 1000 )
+    elsif( self >= 100 && self < 1000 )
       return get_by_hundreds( self )
-    elsif( self > 1000 && self < 999999 )
+    elsif( self >= 1000 && self < 999999 )
       return get_by_thousands( self )
-    elsif( self > 1000000 && self < 999999999)
+    elsif( self >= 1000000 && self < 999999999)
       return get_by_millions(self)
+    elsif(self >= 1_000_000_000 && self < 999_999_999_999)
+      return get_by_billions(self)
     end
   end
 
@@ -116,4 +118,33 @@ class Fixnum
     return millions_as_text + " million " + thousands_as_text
   end
 
+  define_method(:get_by_billions) do |billions|
+    remaining = billions % 1_000_000_000
+    billions -= remaining
+    billions /= 1_000_000_000
+    billions_as_text = ""
+    millions_as_text = ""
+
+    if billions > 99
+      billions_as_text = get_by_hundreds( billions )
+    elsif billions > 19
+      billions_as_text = get_by_tens( billions )
+    else
+      billions_as_text = to_nineteen.fetch( billions )
+    end
+
+    if remaining > 999999
+      millions_as_text = get_by_millions (remaining)
+    elsif remaining > 999
+      thousands_as_text = get_by_thousands( remaining )
+    elsif remaining > 99
+      thousands_as_text = get_by_hundreds( remaining )
+    elsif remaining > 19
+      thousands_as_text = get_by_tens( remaining )
+    else
+      thousands_as_text = to_nineteen.fetch( remaining )
+    end
+
+    return billions_as_text + " billion " + millions_as_text
+  end
 end
