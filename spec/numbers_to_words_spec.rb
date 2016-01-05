@@ -8,4 +8,7 @@ describe("String#numbers_to_words") do
   it ('converts a numerical value above twenty into text as the value') do
     expect(20.numbers_to_words).to(eq('twenty'))
   end
+  it ('converts a numerical value above twenty into text as the value') do
+    expect(99.numbers_to_words).to(eq('ninety nine'))
+  end
 end
