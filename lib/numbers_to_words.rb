@@ -31,16 +31,20 @@ class Fixnum
   define_method(:numbers_to_words) do
     if ( self <= 19 && self >= 0 )
       return to_nineteen.fetch( self )
-    elsif( self > 19 && self < 100 )
+    elsif( self > 19 && self <= 99 )
       return get_by_tens( self )
-    elsif( self >= 100 && self < 1000 )
+    elsif( self >= 100 && self <= 999 )
       return get_by_hundreds( self )
-    elsif( self >= 1000 && self < 999999 )
+    elsif( self >= 1000 && self <= 999999 )
       return get_by_thousands( self )
-    elsif( self >= 1000000 && self < 999999999)
+    elsif( self >= 1000000 && self <= 999999999)
       return get_by_millions(self)
-    elsif(self >= 1_000_000_000 && self < 999_999_999_999)
+    elsif(self >= 1_000_000_000 && self <= 999_999_999_999)
       return get_by_billions(self)
+    elsif( self == 1000000000000 )
+      return "one trillion"
+    else
+      return "out of range!"
     end
   end
 

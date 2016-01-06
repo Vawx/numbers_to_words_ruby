@@ -50,4 +50,7 @@ describe("String#numbers_to_words") do
   it('convert a numerical value between 1_000_000_000 and 999_999_999_999 to text') do
     expect(123456789123.numbers_to_words).to(eq("one hundred and twenty three billion four hundred and fifty six million seven hundred and eighty nine thousand one hundred and twenty three"))
   end
+  it('convert a numerical 1000000000000 to one trillion') do
+    expect(1000000000000.numbers_to_words).to(eq("one trillion"))
+  end
 end
